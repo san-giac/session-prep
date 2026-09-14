@@ -1,0 +1,363 @@
+# Edit this document to add / remove rules for automatic re-ordering
+
+# Tags
+groups: [dr, pc, bs, gtr, ks, orc, bv, lv]
+
+# These are all the variations that will lead to a word being recognised
+words:
+  drums:
+    kick:             [KICK, KIK, KK, BD, BASSDRUM, K]
+    subkick:          [SUBKICK, SUBK]
+    sub:              [SUB, SUBKICK, SUBK]
+    inside:           [IN, INSIDE, INNER, I]
+    outside:          [OUT, OUTSIDE, OUTER, O]
+    trigger:          [TRIG, TRIGGER, SAMPLE, SMP]
+    snare:            [SNARE, SN, SNR, SD]
+    top:              [TOP, TP, UP, UPPER, T]
+    bottom:           [BOT, BTM, BOTTOM, UNDER, UNDERNEATH, DOWN]
+    tom:              [TOM, TOMS, TM, T]
+    floor:            [FLOOR, FLR, FL]
+    hats:             [HH, HAT, HATS, HIHAT, HIHATS]
+    hi:               [HI]
+    cymbals:          [CYM, CYMS, CYMBAL, CYMBALS, CRASH, RIDE, SPLASH, CHINA]
+    whole_kit:        [KIT, MONOKIT, FULLKIT, GLYN, MONO, KNEE]
+    overheads:        [OH, OHS, OVERHEAD, OVERHEADS, OVH]
+    room:             [ROOM, ROOMS, RM, AMB, AMBIENCE, AMBIENT]
+
+  percussion:
+    percussion:       [PERC, PERCUSSION, SHAKER, SHAKERS, TAMB, TAMBO, TAMBOURINE, CONGA, CONGAS, BONGO, BONGOS, COWBELL, CLAP, CLAPS, CLAVE, TRIANGLE, WOODBLOCK, SLEIGH, GUIRO, CABASA]
+
+  bass:
+    bass:             [BASS, BS, BASSGTR, BASSGUITAR]
+    synthetic:        [SYNTH, SYN, "808", MOOG, SUB, SYNTHBASS]
+    synth_bass_word:  ["808", SUBBASS, SYNTHBASS]
+    direct:           [DI, DIRECT, CLEAN, LINE]
+    amped:            [AMP, CAB, CABINET, MIC, MIKED, AMPEG]
+
+  guitars:
+    guitar:           [GTR, GUITAR, GUIT, GTRS, GUITARS, GR, GTAR]
+    electric:         [EL, ELEC, ELECTRIC, E]
+    acoustic:         [AC, ACOUS, ACOUSTIC, A, NYLON, STEEL]
+
+  keys_and_synths:
+    rhodes:           [RHODES, WURLI, WURLITZER, EPIANO, EP]
+    piano_word:       [PIANO, PNO]
+    piano:            [PIANO, PNO, GRAND, UPRIGHT]
+    organ:            [ORGAN, ORG, HAMMOND, B3, LESLIE]
+    synth:            [SYNTH, SYN, SYNTHS, SYNTHESIZER]
+    pad:              [PAD, PADS, WASH, STRINGS]
+    synth_lead_word:  [LEAD, LD, SOLO, ARP]
+    keys:             [KEYS, KEY, KEYBOARD]
+
+  orchestral:
+    orchestral:       [STRINGS, VIOLIN, VIOLA, CELLO, BRASS, TRUMPET, TROMBONE, HORN, SAX, FLUTE, CLARINET, OBOE, ORCH, ORCHESTRA, CHOIR]
+
+  vocals:
+    backing:          [BV, BVS, BACKING, BACKINGS, BACK, HARMONY, HARMONIES, HARM, STACK, STACKS, DOUBLE, DOUBLES, DUB, DUBS, OOOH]
+    vox:              [VOX, VOC, VOCAL, VOCALS, VOICE]
+    lv_word:          [LV]
+    lead:             [LEAD, LD, MAIN]
+
+
+# Global Cleanup Settings
+noise: >-
+  AIF AIFF AUDIO BOUNCE BOUNCED COMP COMPED COPIA COPIES COPY COPY1 COPY2 DEF EDIT EDITED FILE
+  FINAL MASTER MIX MIXDOWN NEW OLD PRINT PRINTED RENDER STEM STEMS TAKE TRACK WAV
+
+weak_extra: [A, AC, ACOUS, ACOUSTIC, E, EL, ELEC, ELECTRIC]
+
+sides:
+  L: L
+  LEFT: L
+  R: R
+  RIGHT: R
+
+capture:
+  source:      [DI, DIRECT, LINE, CLEAN, PICKUP]
+  amp:         [AMP, AMPS, CAB, CABINET, SPEAKER, MIC, MIKED, KEMPER, AXE, SIM]
+  processed:   [TAPE, "1176", LA2A, DIST, DISTORTED, FUZZ, REVERB, VERB, FX]
+  distant:     [ROOM, ROOMS, RM, AMB, AMBIENCE, AMBIENT, FAR, XY, OH, OVERHEAD]
+
+
+# ============================ RULES ============================
+# This is what defines the automatic name generator. Top to bottom, if two rules fit the same input text, the first one wins
+#
+# name: [REQUIRED] Main bit of the output name (needs to be matched in the reordering section).
+#
+# tag: [REQUIRED] Group for the track, which will be its suffix (look at the group section at the top).
+#
+# when: [REQUIRED] Word groups that MUST ALL be present in the filename to use the name ([kick, inside] need to both be recognised for K IN).
+#
+# unless: [OPTIONAL] If ANY of these words are present, the rule is skipped (unless: [floor] on rack toms).
+#
+# number: [OPTIONAL] Formatting style for repeated/multiple tracks:
+#          - spaced : "SN", "SN 2", "SN 3"
+#          - tight  : "T1", "T2", "T3"
+#          - none   : Never appends numbers (Default if omitted)
+#
+# extra: [OPTIONAL] Keep leftover descriptive words from the original file stem?
+#          - yes : "AC GTR intro riff" -> "AC GTR intro riff"
+#          - no  : "AC GTR intro riff" -> "AC GTR"
+#
+# keep_word: [OPTIONAL] Keep the anchor word that triggered the rule in the description:
+#          - yes : "Organ Hammond B3" -> "ORGAN hammond b3"
+#          - no  : "Organ Hammond B3" -> "ORGAN b3" (drops "hammond" as redundant)
+#
+# ignore: [OPTIONAL] Specific redundant words to strip out of the leftover extra text.
+#
+# position: [OPTIONAL] Mark as a microphone placement rather than a played instrument (Used for score tie-breaking. Instruments > mic positions,).
+#          - yes : Mic location (ROOM, OHs, KIT print).
+#          - no  : Played instrument (Default).
+
+rules:
+
+# DRUMS
+  - name: "K sub"
+    tag: dr
+    when: [subkick]
+
+  - name: "K sub"
+    tag: dr
+    when: [kick, sub]
+
+  - name: "K in"
+    tag: dr
+    when: [kick, inside]
+
+  - name: "K out"
+    tag: dr
+    when: [kick, outside]
+
+  - name: "K trig"
+    tag: dr
+    when: [kick, trigger]
+
+  - name: "K"
+    tag: dr
+    when: [kick]
+
+  - name: "SN tp"
+    tag: dr
+    when: [snare, top]
+
+  - name: "SN btm"
+    tag: dr
+    when: [snare, bottom]
+
+  - name: "SN"
+    tag: dr
+    when: [snare]
+    extra: yes
+    number: spaced
+
+  - name: "T{n}"
+    tag: dr
+    when: [tom]
+    unless: [floor]
+    number: tight
+
+  - name: "FL T"
+    tag: dr
+    when: [tom, floor]
+    number: spaced
+
+  - name: "HH"
+    tag: dr
+    when: [hats]
+    extra: yes
+    ignore: [hi]
+
+  - name: "CYM"
+    tag: dr
+    when: [cymbals]
+    extra: yes
+    keep_word: yes
+    number: spaced
+
+  - name: "KIT"
+    tag: dr
+    when: [whole_kit]
+    number: spaced
+    position: yes
+
+  - name: "OHs"
+    tag: dr
+    when: [overheads]
+    extra: yes
+    number: spaced
+    position: yes
+
+  - name: "ROOM"
+    tag: dr
+    when: [room]
+    extra: yes
+    number: spaced
+    position: yes
+
+# PERC
+  - name: "PERC"
+    tag: pc
+    when: [percussion]
+    extra: yes
+    keep_word: yes
+    number: spaced
+
+  # Bass
+  - name: "BASS syn"
+    tag: bs
+    when: [bass, synthetic]
+
+  - name: "BASS syn"
+    tag: bs
+    when: [synth_bass_word]
+
+  - name: "BASS di"
+    tag: bs
+    when: [bass, direct]
+
+  - name: "BASS amp"
+    tag: bs
+    when: [bass, amped]
+
+  - name: "BASS"
+    tag: bs
+    when: [bass]
+    extra: yes
+    number: spaced
+
+# GTRS
+  - name: "EL GTR"
+    tag: gtr
+    when: [guitar, electric]
+    extra: yes
+    number: spaced
+
+  - name: "AC GTR"
+    tag: gtr
+    when: [guitar, acoustic]
+    extra: yes
+    number: spaced
+
+  - name: "GTR"
+    tag: gtr
+    when: [guitar]
+    extra: yes
+    number: spaced
+
+# KEYS
+  - name: "EL PIANO"
+    tag: ks
+    when: [rhodes]
+    extra: yes
+    keep_word: yes
+
+  - name: "EL PIANO"
+    tag: ks
+    when: [piano_word, electric]
+    extra: yes
+
+  - name: "PIANO"
+    tag: ks
+    when: [piano]
+    extra: yes
+    number: spaced
+
+  - name: "ORGAN"
+    tag: ks
+    when: [organ]
+    extra: yes
+    keep_word: yes
+    number: spaced
+
+  - name: "SYNTH PAD"
+    tag: ks
+    when: [synth, pad]
+    extra: yes
+    number: spaced
+
+  - name: "SYNTH LEAD"
+    tag: ks
+    when: [synth, synth_lead_word]
+    extra: yes
+    number: spaced
+
+  - name: "SYNTH KEYS"
+    tag: ks
+    when: [synth]
+    extra: yes
+    number: spaced
+
+  - name: "SYNTH KEYS"
+    tag: ks
+    when: [keys]
+    extra: yes
+    number: spaced
+
+# ORC
+  - name: "ORCH"
+    tag: orc
+    when: [orchestral]
+    extra: yes
+    keep_word: yes
+    number: spaced
+
+# VOCALS
+  - name: "BVS"
+    tag: bv
+    when: [backing]
+    extra: yes
+    ignore: [vox]
+    number: spaced
+
+  - name: "LV"
+    tag: lv
+    when: [lv_word]
+    number: spaced
+
+  - name: "LV"
+    tag: lv
+    when: [vox, lead]
+    ignore: [vox]
+    number: spaced
+
+  - name: "LV"
+    tag: lv
+    when: [vox]
+    extra: yes
+    number: spaced
+
+# This will decide the order of the tracks when using automatic re-ordering (tags -> this list -> track start time)
+order:
+  - "K in"
+  - "K out"
+  - "K sub"
+  - "K trig"
+  - "K"
+  - "SN tp"
+  - "SN btm"
+  - "SN"
+  - "T{n}"
+  - "FL T"
+  - "HH"
+  - "CYM"
+  - "KIT"
+  - "OHs"
+  - "ROOM"
+  - "PERC"
+  - "BASS di"
+  - "BASS amp"
+  - "BASS"
+  - "BASS syn"
+  - "AC GTR"
+  - "EL GTR"
+  - "GTR"
+  - "PIANO"
+  - "EL PIANO"
+  - "ORGAN"
+  - "SYNTH PAD"
+  - "SYNTH LEAD"
+  - "SYNTH KEYS"
+  - "ORCH"
+  - "BVS"
+  - "LV"
+  

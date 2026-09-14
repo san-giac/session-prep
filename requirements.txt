@@ -1,0 +1,8 @@
+PySide6-Essentials>=6.6
+numpy>=1.24
+soundfile>=0.12.1
+soxr>=0.3.7
+sounddevice>=0.4.6
+scipy>=1.10
+PyYAML>=6.0
+numba>=0.59

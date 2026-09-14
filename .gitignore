@@ -1,0 +1,12 @@
+.*
+!.gitignore
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+Session Prep.app/
+*.iconset/
+icon.icns
+pyrightconfig.json
+.DS_Store
