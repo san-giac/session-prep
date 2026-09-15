@@ -63,7 +63,7 @@ shipping the build script sidesteps the problem entirely.
 
 ## Usage
 
-Some sort of manual coming soon.
+You can find some detailed information here: https://sandrogiacometti.com/things/2026/9/14/session-prep-tool
 
 ## Licence
 This program is free software: you can redistribute it and/or modify it under
