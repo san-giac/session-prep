@@ -1,5 +1,8 @@
 # Session Prep
 
+<img width="3840" height="2097" alt="sess_prep_02" src="https://github.com/user-attachments/assets/7a3de6f8-8c7b-4036-bbb0-5af94aa5ffb5" />
+
+
 A tool for analysing and preparing audio files for a range of end uses.
 
 This was mainly made for my own use when preparing audio files for mixing (hence a few functions 
@@ -63,9 +66,6 @@ shipping the build script sidesteps the problem entirely.
 Some sort of manual coming soon.
 
 ## Licence
-
-Copyright (C) 2026 Sandro Giacometti
-
 This program is free software: you can redistribute it and/or modify it under
 the terms of the GNU General Public License as published by the Free Software
 Foundation, either version 3 of the License, or (at your option) any later
@@ -81,9 +81,6 @@ this program. If not, see <https://www.gnu.org/licenses/>. The full text is in
 
 ### Third-party
 
-Dependencies are installed from PyPI by `pip`, not redistributed here. Their
-licences apply to your own installation, and all are GPL-3.0 compatible:
-
 | Package | Licence |
 | --- | --- |
 | PySide6-Essentials (Qt) | LGPL-3.0 |
@@ -92,9 +89,3 @@ licences apply to your own installation, and all are GPL-3.0 compatible:
 | sounddevice (PortAudio) | MIT |
 | NumPy, SciPy, numba | BSD |
 | PyYAML | MIT |
-
-Qt is used under the LGPL via the unmodified PySide6 wheel from PyPI. The LGPL
-libraries are all "or later" grants, so they combine with GPL-3.0 without
-friction. If you ever build a self-contained bundle that ships Qt, libsoxr or
-libsndfile inside it, the LGPL relinking and notice obligations apply on top of
-the GPL and this section is no longer sufficient.
